@@ -1,7 +1,7 @@
 # subreddit-classification-dataset
 Create a subreddit classifier and have extensive study
 
-There will be two main tracks:
+There will be a few different tracks:
 1. Coarse track: Based on only the title
     - small
     - big
