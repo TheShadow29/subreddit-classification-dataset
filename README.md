@@ -13,7 +13,14 @@ There will be two main tracks:
     - Preprocessing could include removing posts with less than a certain number of upvotes.
     - Could also remove controversial posts.
     - Also change the labels via looking at the comments. Some comments may suggest that this is more appropriate to post on a different sub-reddit.
+    
+4. Adherence to rules:
+    - Different sub-reddits have different rules. Can have input as rules to be followed as a natural language and determine if a particular post is suitable for the particular sub-reddit or not. 
     - Also based on certain features like day of the week, different sub-reddits have slightly different rules. Can take into consideration this, and create a more robust dataset which can even classify this field. (Slightly more complicated issue).
+
+### Motivation:
+1. If some user tries to post, give a suitable recommendation wheather, 
+
 ### Important links:
 1. A list of all sub-reddits: https://www.kaggle.com/rayraegah/subreddits
     - Will select a small subset for the coarse track small
