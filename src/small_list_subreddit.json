@@ -1,0 +1,18 @@
+{
+    "description": "List of subreddits to be used",
+    "coarse_slist": [
+	"askreddit",
+	"Showerthoughts",
+	"MachineLearning",
+	"tifu",
+	"news",
+	"LifeProTips"
+    ],
+    "fine_slist": [
+	"askreddit",
+	"nostupidquestions",
+	"explainlikeimfive",
+	"legaladvice",
+	"personalfinance"
+    ]
+}
