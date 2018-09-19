@@ -58,3 +58,5 @@ There will be a few different tracks:
 ### Lakshmi
 Throwing some ideas : Might be silly (still getting to know reddit platform)
 Can we infer ethnicity from the posts? 
+Do we need to evaluate any p-score or z-test for correlation of a given post to its sub-reddit?
+
