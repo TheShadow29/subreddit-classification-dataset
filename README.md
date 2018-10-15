@@ -38,6 +38,8 @@ There will be a few different tracks:
 	- Simple tutorial with Python: https://www.pythonforbeginners.com/python-on-the-web/how-to-use-reddit-api-in-python/
 	- Python Reddit API Wrapper: https://github.com/praw-dev/praw, https://praw.readthedocs.io/en/latest/
 
+3. Sub-word level embeddings: http://ruder.io/word-embeddings-2017/index.html#subwordlevelembeddings
+
 ### ToDo:
 - [x] Create a small curated list of sub-reddits to use for coarse, fine-grained.
 - [ ] Get familiar with the full sub-reddit dataset. Can filter out nsfw.
