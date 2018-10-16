@@ -5,9 +5,10 @@ That would inherently create a hierarchy
 Author: Arka Sadhu
 """
 # from pathlib import Path
-import networkx as nx
 import pandas as pd
+import networkx as nx
 import wordsegment as ws
+import spacy
 
 
 class SrGraphNode:
@@ -32,6 +33,7 @@ class SrGraphNode:
 
 if __name__ == '__main__':
     ws.load()
+    nlp = spacy.load('en_core_web_md')
     sr_list = list(pd.read_csv('./high_filtered_srlist.csv', header=None)[0])
     G = nx.Graph()
 
