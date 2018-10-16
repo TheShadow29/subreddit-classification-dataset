@@ -26,7 +26,7 @@ class SubrFilter:
         Removes subreddits with less than min count
         """
         # Set minimum count
-        min_sub_count = cfg['min_sub_count']
+        min_sub_count = self.cfg['min_sub_count']
         # filter out subreddits based on min subscribers_count
         self.sub_red_info = self.sub_red_info[self.sub_red_info.subscribers_count > min_sub_count]
 
@@ -50,7 +50,10 @@ class SubrFilter:
         self.sub_red_info = self.sub_red_info[tmp_bool_df]
 
 
-if __name__ == '__main__':
+def get_default_filtered_list():
+    """
+    Convenience function to get default filtered list
+    """
     csv_file = Path('/scratch/arka/Ark_git_files/subr/subreddits_public.csv')
     sub_red_info = pd.read_csv(csv_file)
     # Convert the subscribers_count into ints and remove None/NaN by setting them to 0
@@ -66,3 +69,11 @@ if __name__ == '__main__':
     sub_filter.filter_min_sub_count()
     sub_filter.create_subr_instances()
     sub_filter.filter_non_text_strict()
+
+    return sub_filter.sub_red_info
+
+
+if __name__ == '__main__':
+    subr_filter = get_default_filtered_list()
+    subr_filter.subreddit_name.to_csv(
+        'high_filtered_srlist.csv', index=False, header=False)
