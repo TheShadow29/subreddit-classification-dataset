@@ -43,10 +43,19 @@ class SubrFilter:
         """
         Simply looks at the subreddit properties
         if image/video/gifs allowed then they are removed
+        Note: Use keep_only_text_strict from now on
         """
         print(len(self.sub_red_info))
         tmp_bool_df = self.sub_red_info.subreddit.apply(
             lambda x: not x.allow_images)
+        self.sub_red_info = self.sub_red_info[tmp_bool_df]
+
+    def keep_only_text_strict(self):
+        """
+        Assumes the csv already has all relevant columns
+        """
+        tmp_bool_df = self.sub_red_info.apply(lambda row: not(
+            row.allw_imgs or row.allw_vids or row.allw_gifs or row.over18), axis=1)
         self.sub_red_info = self.sub_red_info[tmp_bool_df]
 
 
@@ -54,7 +63,8 @@ def get_default_filtered_list():
     """
     Convenience function to get default filtered list
     """
-    csv_file = Path('/scratch/arka/Ark_git_files/subr/subreddits_public.csv')
+    # csv_file = Path('/scratch/arka/Ark_git_files/subr/subreddits_public.csv')
+    csv_file = Path('./req_subr_without_pub_desc.csv')
     sub_red_info = pd.read_csv(csv_file)
     # Convert the subscribers_count into ints and remove None/NaN by setting them to 0
     sub_red_info.subscribers_count = pd.to_numeric(
@@ -67,13 +77,13 @@ def get_default_filtered_list():
 
     sub_filter = SubrFilter(sub_red_info, red_crawler, cfg)
     sub_filter.filter_min_sub_count()
-    sub_filter.create_subr_instances()
-    sub_filter.filter_non_text_strict()
-
+    # sub_filter.create_subr_instances()
+    # sub_filter.filter_non_text_strict()
+    sub_filter.keep_only_text_strict()
     return sub_filter.sub_red_info
 
 
 if __name__ == '__main__':
     subr_filter = get_default_filtered_list()
-    subr_filter.subreddit_name.to_csv(
-        'high_filtered_srlist.csv', index=False, header=False)
+    # subr_filter.subreddit_name.to_csv(
+    # 'high_filtered_srlist.csv', index=False, header=False)

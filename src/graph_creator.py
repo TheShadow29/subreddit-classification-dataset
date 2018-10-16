@@ -13,6 +13,7 @@ import networkx as nx
 import wordsegment as ws
 import spacy
 from sklearn import metrics
+from tqdm import tqdm
 
 
 class SrGraphNode:
@@ -41,6 +42,9 @@ class SrGraphNode:
         """
         self.we_lst = embedder(' '.join(self.name_segments))
 
+    def __str__(self):
+        return self.name
+
 
 def full_sim(sr_node1, sr_node2):
     """
@@ -55,7 +59,9 @@ if __name__ == '__main__':
     cfg = json.load(open('./config.json'))
     ws.load()
     nlp = spacy.load('en_core_web_md')
-    sr_list = list(pd.read_csv('./high_filtered_srlist.csv', header=None)[0])
+    # sr_list = list(pd.read_csv('./high_filtered_srlist.csv', header=None)[0])
+    sr_list = list(pd.read_csv('./low_filtered_strict.csv')
+                   ['subreddit_name'])
     G = nx.Graph()
 
     # Create the Nodes for the graph
@@ -69,7 +75,9 @@ if __name__ == '__main__':
     # Create Fully connected graph
     comb = itertools.combinations(np.arange(len(id_to_node_dict)), 2)
     sim_thresh = cfg['sim_thresh']
-    for c in comb:
+    tot_nodes = len(id_to_node_dict)
+    tot_comb = tot_nodes * (tot_nodes - 1) // 2
+    for c in tqdm(comb, total=tot_comb):
         n1 = id_to_node_dict[c[0]]
         n2 = id_to_node_dict[c[1]]
         sim = full_sim(n1, n2)
