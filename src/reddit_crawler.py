@@ -27,6 +27,13 @@ def get_posts_for_reddit_list(rinst, rlist, lim=10):
     return pd.DataFrame(out_list, columns=['Title', 'Subreddit'])
 
 
+def get_default_reddit_inst():
+    """
+    Helper function to get default reddit instance
+    """
+    return praw.Reddit('scraper')
+
+
 if __name__ == '__main__':
     # Defining paths
     SRC_JSON = Path('./small_list_subreddit.json')
