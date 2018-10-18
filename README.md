@@ -42,10 +42,11 @@ There will be a few different tracks:
 
 ### ToDo:
 - [x] Create a small curated list of sub-reddits to use for coarse, fine-grained.
-- [ ] Get familiar with the full sub-reddit dataset. Can filter out nsfw.
-- [ ] Create a Hierarchical Graph. Should cluster some sub-reddits together. Possible workflow: 1) Take max possible words of each subreddit, pass through word embedder (possibly sub-word level embedder). Append the descriptions (for future use). Cluster graph using similarity metric (simple thresholding on metric would be a good first step).
-- [ ] Create a small sample dataset. Start with coarse. Then FineGrained. Titles/Posts segregated.
-- [ ] Fileter out small cases.
+- [x] Get familiar with the full sub-reddit dataset. Can filter out nsfw.
+- [x] Create a Hierarchical Graph. Should cluster some sub-reddits together. Possible workflow: 1) Take max possible words of each subreddit, pass through word embedder (possibly sub-word level embedder). Append the descriptions (for future use). Cluster graph using similarity metric (simple thresholding on metric would be a good first step).
+- [x] Create a small sample dataset. Start with coarse. Then FineGrained. Titles/Posts segregated.
+- [ ] Create a larger dataset.
+- [ ] Clean the dataset
 - [ ] Propose good baseline models. AWD-LSTM pre-trained on wiki text should be a good start point.
 - [ ] Test baseline models on larger dataset.
 
