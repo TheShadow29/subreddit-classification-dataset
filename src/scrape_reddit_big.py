@@ -77,8 +77,9 @@ if __name__ == '__main__':
     small_sr_list = list(pd.read_csv(
         './high_filtered_srlist.csv', header=None)[0])
     cr = Crawl()
-    for i, sr in enumerate(small_sr_list[:1]):
-        olist = cr.scrape('askreddit', num_to_scrape=5000)
+    for i, sr in enumerate(small_sr_list):
+        olist = cr.scrape('askreddit', num_to_scrape=5000,
+                          scrape_from='controversial')
         df_out = pd.DataFrame(olist, columns=cr.header_lst)
         df_out.to_csv(f'./subr_csvs/{sr}.csv', index=False, header=True)
         print(i, f'Finished {sr} subreddit')
