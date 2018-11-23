@@ -50,29 +50,7 @@ class Crawl:
         if out_list is None:
             out_list = []
         for subm in tqdm(subm_generator(limit=num_to_scrape), total=num_to_scrape):
-            # import pdb
-            # pdb.set_trace()
-            is_archived = subm.archived
-            num_gilded = subm.gilded
-            is_duplicate = len(list(subm.duplicates())) > 0
-            is_meta = subm.is_meta
-            is_self = subm.is_self
-            perm_link = subm.permalink
-            is_stickied = subm.stickied
-            score = subm.score
-            ups = subm.ups
-            downs = subm.downs
-            subreddit_name = subm.subreddit.display_name
-            title = subm.title
-            text = subm.selftext
-            create_time = str(datetime.utcfromtimestamp(subm.created_utc))
-            captured_time = str(datetime.utcnow())
-            tmp_lst = [is_archived, num_gilded, is_duplicate, is_meta, is_self, perm_link,
-                       is_stickied, score, ups, downs, subreddit_name, title, text, create_time,
-                       captured_time]
             tmp_dct = subm.__dict__
-            for ind, t in enumerate(self.header_lst):
-                tmp_dct[t] = tmp_lst[ind]
             out_list.append(tmp_dct)
 
         return out_list
@@ -80,11 +58,11 @@ class Crawl:
 
 if __name__ == '__main__':
     small_sr_list = list(pd.read_csv(
-        './high_filtered_srlist.csv', header=None)[0])
+        './low_filtered_strict.csv')['subreddit_name'])
     cr = Crawl()
     for i, sr in enumerate(small_sr_list):
         olist = cr.scrape(sr, num_to_scrape=1000,
                           scrape_from='hot')
         df_out = pd.DataFrame(olist, columns=cr.header_lst)
-        df_out.to_csv(f'./subr_csvs/{sr}.csv', index=False, header=True)
+        df_out.to_csv(f'./subr_big_csvs/{sr}.csv', index=False, header=True)
         print(i, f'Finished {sr} subreddit')
