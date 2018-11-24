@@ -4,10 +4,10 @@ Author: Arka Sadhu
 """
 # import praw
 from datetime import datetime
+from pathlib import Path
 from tqdm import tqdm
 import pandas as pd
 from reddit_crawler import get_default_reddit_inst
-from pathlib import Path
 
 class Crawl:
     """
