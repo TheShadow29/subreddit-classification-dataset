@@ -7,7 +7,7 @@ from datetime import datetime
 from tqdm import tqdm
 import pandas as pd
 from reddit_crawler import get_default_reddit_inst
-
+from pathlib import Path
 
 class Crawl:
     """
@@ -60,9 +60,18 @@ if __name__ == '__main__':
     small_sr_list = list(pd.read_csv(
         './low_filtered_strict.csv')['subreddit_name'])
     cr = Crawl()
-    for i, sr in enumerate(small_sr_list):
-        olist = cr.scrape(sr, num_to_scrape=1000,
-                          scrape_from='hot')
-        df_out = pd.DataFrame(olist, columns=cr.header_lst)
-        df_out.to_csv(f'./subr_big_csvs/{sr}.csv', index=False, header=True)
-        print(i, f'Finished {sr} subreddit')
+    for scrape_from in ['top', 'controversial', 'hot']:
+        tdir = Path(f'./subr_big_csvs_{scrape_from}')
+        tdir.mkdir(exist_ok=True)
+        for i, sr in enumerate(small_sr_list):
+            try:
+                if (tdir / f'{sr}.csv').exists():
+                    continue
+                olist = cr.scrape(sr, num_to_scrape=1000,
+                                  scrape_from=scrape_from)
+                df_out = pd.DataFrame(olist, columns=cr.header_lst)
+                df_out.to_csv(tdir / f'{sr}.csv', index=False, header=True)
+                print(i, f'Finished {sr}_{scrape_from} subreddit')
+            except Exception:
+                pass
+                # continue
