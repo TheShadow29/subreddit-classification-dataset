@@ -45,9 +45,11 @@ There will be a few different tracks:
 - [x] Get familiar with the full sub-reddit dataset. Can filter out nsfw.
 - [x] Create a Hierarchical Graph. Should cluster some sub-reddits together. Possible workflow: 1) Take max possible words of each subreddit, pass through word embedder (possibly sub-word level embedder). Append the descriptions (for future use). Cluster graph using similarity metric (simple thresholding on metric would be a good first step).
 - [x] Create a small sample dataset. Start with coarse. Then FineGrained. Titles/Posts segregated.
-- [ ] Create a larger dataset.
-- [ ] Clean the dataset
-- [ ] Propose good baseline models. AWD-LSTM pre-trained on wiki text should be a good start point.
+- [x] Create a larger dataset.
+- [x] Clean the dataset
+- [x] Propose good baseline models like tf-idf
+- [ ] AWD-LSTM pre-trained on wiki text should be a good start point.
+- [ ] Can do BERT as well if time permits
 - [ ] Test baseline models on larger dataset.
 
 ### Not To Do but good possible extensions:
@@ -58,10 +60,3 @@ There will be a few different tracks:
 1. Download the subreddit list in the csv format inside a folder called data.
 2. Install the dependencies via `pip install -r requirements`. Suggested to use a python 3.6 environment.
 3. Create a `praw.ini` file in the `src` directory. Check https://praw.readthedocs.io/en/latest/getting_started/configuration/prawini.html for more information on how to set up the `.ini` file. Name the bot as `scraper`.
-
-
-### Lakshmi
-Throwing some ideas : Might be silly (still getting to know reddit platform)
-Can we infer ethnicity from the posts? 
-Do we need to evaluate any p-score or z-test for correlation of a given post to its sub-reddit?
-
