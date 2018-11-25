@@ -41,21 +41,11 @@ def do_simple_tfidf():
     """
     lab2id = json.load(open('./lab2id.json'))
 
-    clean_file = pd.read_csv('../data/all_title_data.csv')
-    clean_file = clean_file[:400000]
-    clean_data = clean_file['title']
-    clean_label = clean_file['label'].map(lab2id)
-
-    id_list = np.random.permutation(len(clean_data))
-    tot_len = len(id_list)
-    tr_id_list = id_list[:int(tot_len * 0.7)]
-    val_id_list = id_list[int(tot_len*0.7):]
-    print(
-        f'Total in training set {len(tr_id_list)}, Total in validation {len(val_id_list)}')
-    clean_train_data, clean_train_label = clean_data[tr_id_list], clean_label[tr_id_list]
-    clean_val_data, clean_val_label = clean_data[val_id_list], clean_label[val_id_list]
     nlp = spacy.load('en')
     tokenizer = English().Defaults.create_tokenizer(nlp)
+    (clean_train_data, clean_train_label), (clean_val_data,
+                                            clean_val_label) = load_data(
+                                                limit=40000, domap=True)
 
     text_lr_clf = Pipeline(
         [('vect', CountVectorizer()), ('tfidf', TfidfTransformer()), ('clf', LR(verbose=1, solver='lbfgs'))])
@@ -183,4 +173,5 @@ def evaluate(tokenizer, textcat, texts, cats):
 
 
 if __name__ == '__main__':
-    main()
+    do_simple_tfidf()
+    # main()
