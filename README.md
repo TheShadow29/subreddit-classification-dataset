@@ -60,3 +60,4 @@ There will be a few different tracks:
 1. Download the subreddit list in the csv format inside a folder called data.
 2. Install the dependencies via `pip install -r requirements`. Suggested to use a python 3.6 environment.
 3. Create a `praw.ini` file in the `src` directory. Check https://praw.readthedocs.io/en/latest/getting_started/configuration/prawini.html for more information on how to set up the `.ini` file. Name the bot as `scraper`.
+4. Data files can be found in [Drive Folder](https://drive.google.com/open?id=1oCmNJZKQubFF4f6joYZq8KQtfD32XkNP)
