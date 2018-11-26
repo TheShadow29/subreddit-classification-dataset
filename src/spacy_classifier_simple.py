@@ -45,7 +45,7 @@ def do_simple_tfidf():
     tokenizer = English().Defaults.create_tokenizer(nlp)
     (clean_train_data, clean_train_label), (clean_val_data,
                                             clean_val_label) = load_data(
-                                                limit=40000, domap=True)
+                                                limit=200000, domap=True)
 
     text_lr_clf = Pipeline(
         [('vect', CountVectorizer()), ('tfidf', TfidfTransformer()), ('clf', LR(verbose=1, solver='lbfgs'))])
@@ -59,7 +59,7 @@ def load_data(limit=18000, domap=False):
 
     clean_file = pd.read_csv('../data/all_title_data.csv')
     clean_file = clean_file[:limit]
-    clean_data = clean_file['title']
+    clean_data = clean_file['text']
     if domap:
         clean_label = clean_file['label'].map(lab2id)
     else:
