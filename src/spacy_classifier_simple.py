@@ -3,6 +3,7 @@ Baseline approach to be used in spacy
 """
 import json
 from pathlib import Path
+import pickle
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
@@ -35,14 +36,14 @@ def calc_print_accuracy(text_clf, test_data, test_label):
     return clf_accuracy
 
 
-def do_simple_tfidf():
+def do_simple_tfidf(from_pickle=None):
     """
     Simple tfidf stuff
     """
-    lab2id = json.load(open('./lab2id.json'))
+    # lab2id = json.load(open('./lab2id.json'))
 
-    nlp = spacy.load('en')
-    tokenizer = English().Defaults.create_tokenizer(nlp)
+    # nlp = spacy.load('en')
+    # tokenizer = English().Defaults.create_tokenizer(nlp)
     (clean_train_data, clean_train_label), (clean_val_data,
                                             clean_val_label) = load_data(
                                                 limit=200000, domap=True)
@@ -50,30 +51,45 @@ def do_simple_tfidf():
     text_lr_clf = Pipeline(
         [('vect', CountVectorizer()), ('tfidf', TfidfTransformer()), ('clf', LR(verbose=1, solver='lbfgs'))])
     print('Starting to Fit')
-    text_lr_clf = text_lr_clf.fit(clean_train_data, clean_train_label)
+    if from_pickle is None:
+        text_lr_clf = text_lr_clf.fit(clean_train_data, clean_train_label)
+    else:
+        text_lr_clf = pickle.load(open(from_pickle, 'rb'))
     print('Starting Evaluation')
     calc_print_accuracy(text_lr_clf, clean_val_data, clean_val_label)
+    return text_lr_clf
+
+# def load_data(limit=18000, domap=False):
+
+#     clean_file = pd.read_csv('../data/all_title_data.csv')
+#     clean_file = clean_file[:limit]
+#     clean_data = clean_file['text']
+#     if domap:
+#         clean_label = clean_file['label'].map(lab2id)
+#     else:
+#         clean_label = clean_file['label']
+#     id_list = np.random.permutation(len(clean_data))
+#     tot_len = len(id_list)
+#     tr_id_list = id_list[:int(tot_len * 0.7)]
+#     val_id_list = id_list[int(tot_len*0.7):]
+#     print(
+#         f'Total in training set {len(tr_id_list)}, Total in validation {len(val_id_list)}')
+#     clean_train_data, clean_train_label = clean_data[tr_id_list], clean_label[tr_id_list]
+#     clean_val_data, clean_val_label = clean_data[val_id_list], clean_label[val_id_list]
+
+#     return (clean_train_data, clean_train_label), (clean_val_data, clean_val_label)
 
 
-def load_data(limit=18000, domap=False):
+def load_data(limit=18000, domap=True):
 
-    clean_file = pd.read_csv('../data/all_title_data.csv')
-    clean_file = clean_file[:limit]
-    clean_data = clean_file['text']
+    trn_dat = pd.read_csv('../data/coarse_grained_train.csv')
+    lab = trn_dat.label.unique()
+    lab_map = {k: ind for ind, k in enumerate(lab)}
+    val_dat = pd.read_csv('../data/coarse_grained_val.csv')
     if domap:
-        clean_label = clean_file['label'].map(lab2id)
-    else:
-        clean_label = clean_file['label']
-    id_list = np.random.permutation(len(clean_data))
-    tot_len = len(id_list)
-    tr_id_list = id_list[:int(tot_len * 0.7)]
-    val_id_list = id_list[int(tot_len*0.7):]
-    print(
-        f'Total in training set {len(tr_id_list)}, Total in validation {len(val_id_list)}')
-    clean_train_data, clean_train_label = clean_data[tr_id_list], clean_label[tr_id_list]
-    clean_val_data, clean_val_label = clean_data[val_id_list], clean_label[val_id_list]
-
-    return (clean_train_data, clean_train_label), (clean_val_data, clean_val_label)
+        trn_dat.label = trn_dat.label.map(lab_map)
+        val_dat.label = val_dat.label.map(lab_map)
+    return (trn_dat.text, trn_dat.label), (val_dat.text, val_dat.label)
 
 
 def format_data_for_spacy(texts, labs, all_labs):
@@ -173,5 +189,6 @@ def evaluate(tokenizer, textcat, texts, cats):
 
 
 if __name__ == '__main__':
-    do_simple_tfidf()
+    # text_lr_clf = do_simple_tfidf(from_pickle='./tfidf_coarse_trained.pkl')
+    text_lr_clf = do_simple_tfidf()
     # main()
