@@ -1,1 +1,11 @@
 Instructions to reproduce the results
+
+The main input data file is:
+
+The libraries used/need to be installed are:-
+Sample ones eg: below -- need to update with correct ones 
+brew install elasticsearch
+pip3 install elasticsearch
+
+
+The order in which the programs need to be executed:
