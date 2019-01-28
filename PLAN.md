@@ -48,9 +48,8 @@ There will be a few different tracks:
 - [x] Create a larger dataset.
 - [x] Clean the dataset
 - [x] Propose good baseline models like tf-idf
-- [ ] AWD-LSTM pre-trained on wiki text should be a good start point.
-- [ ] Can do BERT as well if time permits
-- [ ] Test baseline models on larger dataset.
+- [x] AWD-LSTM pre-trained on wiki text should be a good start point.
+- [x] Test baseline models on larger dataset.
 
 ### Not To Do but good possible extensions:
 1. Extend this to visual case. Popular examples would be meme sub-reddits. For example, seeing the meme, can the model decide if it should go to prequelmemes or sequelmemes or perhaps even trebuchetmemes.
